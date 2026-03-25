@@ -44,9 +44,29 @@ npm run lint    # ESLint
 
 ## Deploy (Vercel)
 
-Import the GitHub repo in the [Vercel dashboard](https://vercel.com/new) (Framework Preset: **Vite**). `vercel.json` adds a SPA fallback so routes like `/menu/burgers` work on refresh. Attach your portfolio domain under **Project → Settings → Domains**.
+Production demo: **https://restaurant-kiosk-ui.vercel.app**
+
+Import the GitHub repo in the [Vercel dashboard](https://vercel.com/new) (Framework Preset: **Vite**). `vercel.json` adds a SPA fallback so routes like `/menu/burgers` work on refresh.
 
 Or from this directory, after [`vercel login`](https://vercel.com/docs/cli): `npx vercel --prod`.
+
+### Same hostname as your portfolio (e.g. sivaganesh1407.vercel.app)
+
+Vercel assigns **one project per `*.vercel.app` hostname**. Your portfolio at [sivaganesh1407.vercel.app](https://sivaganesh1407.vercel.app/) and this kiosk **cannot both use that exact URL** as their primary deployment target.
+
+**Practical options:**
+
+1. **Link from your portfolio (simplest)** — In your portfolio’s **Projects** section, set the live / “View” link for this work to **https://restaurant-kiosk-ui.vercel.app** (or add a “Live demo” button). Visitors stay on your brand; the demo opens in the same tab or a new tab.
+
+2. **Embed full screen in a portfolio page** — Add an `<iframe>` whose `src` is `https://restaurant-kiosk-ui.vercel.app` (set width/height and `style="border:0;min-height:80vh"` as needed). The URL bar still shows your portfolio path.
+
+3. **Serve under a path on the portfolio project** — In the **portfolio** repo, copy this app’s `dist/` output into something like `public/restaurant-kiosk/` and deploy that project. Build this app with a subpath:
+   ```bash
+   VITE_BASE_PATH=/restaurant-kiosk/ npm run build
+   ```
+   Then deploy the portfolio so `yoursite.vercel.app/restaurant-kiosk/` serves those files (and add a SPA fallback for that folder in the **portfolio** project’s `vercel.json`).
+
+4. **Custom subdomain** — In Vercel **Domains**, add something like `kiosk.yourdomain.com` to **this** project if you use your own domain on the portfolio.
 
 ## Requirements
 

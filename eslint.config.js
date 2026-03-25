@@ -32,4 +32,8 @@ export default [
     files: ['src/context/**/*.{js,jsx}'],
     rules: { 'react-refresh/only-export-components': 'off' },
   },
+  {
+    files: ['vite.config.js', 'postcss.config.js', 'tailwind.config.js'],
+    languageOptions: { globals: globals.node },
+  },
 ];
