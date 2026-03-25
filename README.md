@@ -50,23 +50,38 @@ Import the GitHub repo in the [Vercel dashboard](https://vercel.com/new) (Framew
 
 Or from this directory, after [`vercel login`](https://vercel.com/docs/cli): `npx vercel --prod`.
 
-### Same hostname as your portfolio (e.g. sivaganesh1407.vercel.app)
+### Host inside your portfolio only (e.g. [sivaganesh1407.vercel.app](https://sivaganesh1407.vercel.app/))
 
-Vercel assigns **one project per `*.vercel.app` hostname**. Your portfolio at [sivaganesh1407.vercel.app](https://sivaganesh1407.vercel.app/) and this kiosk **cannot both use that exact URL** as their primary deployment target.
+Vercel’s **dashboard lists one row per project**. The separate project **restaurant-kiosk-ui** will never appear “inside” your portfolio project — they are two deployments. To have **only your portfolio project** on Vercel and still show the kiosk:
 
-**Practical options:**
-
-1. **Link from your portfolio (simplest)** — In your portfolio’s **Projects** section, set the live / “View” link for this work to **https://restaurant-kiosk-ui.vercel.app** (or add a “Live demo” button). Visitors stay on your brand; the demo opens in the same tab or a new tab.
-
-2. **Embed full screen in a portfolio page** — Add an `<iframe>` whose `src` is `https://restaurant-kiosk-ui.vercel.app` (set width/height and `style="border:0;min-height:80vh"` as needed). The URL bar still shows your portfolio path.
-
-3. **Serve under a path on the portfolio project** — In the **portfolio** repo, copy this app’s `dist/` output into something like `public/restaurant-kiosk/` and deploy that project. Build this app with a subpath:
+1. **Build this app for a subpath** (assets and router use `/restaurant-kiosk/`):
    ```bash
-   VITE_BASE_PATH=/restaurant-kiosk/ npm run build
+   npm run build:portfolio
    ```
-   Then deploy the portfolio so `yoursite.vercel.app/restaurant-kiosk/` serves those files (and add a SPA fallback for that folder in the **portfolio** project’s `vercel.json`).
+   Or copy automatically into your portfolio repo (adjust the path):
+   ```bash
+   chmod +x scripts/build-for-portfolio.sh
+   ./scripts/build-for-portfolio.sh /path/to/YOUR-PORTFOLIO-REPO/public/restaurant-kiosk
+   ```
+   (`public/` is for Vite/React; use `static/` for some other generators — same idea: web root subfolder.)
 
-4. **Custom subdomain** — In Vercel **Domains**, add something like `kiosk.yourdomain.com` to **this** project if you use your own domain on the portfolio.
+2. **In your portfolio repo**, merge these **rewrites** into its `vercel.json` (create the file if needed). Keep any rules you already have; add:
+   ```json
+   {
+     "rewrites": [
+       { "source": "/restaurant-kiosk", "destination": "/restaurant-kiosk/index.html" },
+       { "source": "/restaurant-kiosk/", "destination": "/restaurant-kiosk/index.html" },
+       { "source": "/restaurant-kiosk/:path*", "destination": "/restaurant-kiosk/index.html" }
+     ]
+   }
+   ```
+   If `vercel.json` already has `rewrites`, append these three objects to that array.
+
+3. **Commit and push your portfolio repo** — Vercel redeploys **only** [sivaganesh1407.vercel.app](https://sivaganesh1407.vercel.app/). Open **https://sivaganesh1407.vercel.app/restaurant-kiosk/**
+
+4. **Optional cleanup** — In [Vercel Dashboard](https://vercel.com/dashboard), remove the standalone **restaurant-kiosk-ui** project so your list matches “portfolio only.”
+
+**Quick alternatives (still two projects on Vercel):** link or iframe from the portfolio to **https://restaurant-kiosk-ui.vercel.app** — no portfolio repo changes.
 
 ## Requirements
 

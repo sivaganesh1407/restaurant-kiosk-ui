@@ -7,6 +7,7 @@
     "start": "vite",
     "dev": "vite",
     "build": "vite build",
+    "build:portfolio": "VITE_BASE_PATH=/restaurant-kiosk/ vite build",
     "preview": "vite preview",
     "lint": "eslint ."
   },
