@@ -42,6 +42,12 @@ npm run preview # serve dist locally
 npm run lint    # ESLint
 ```
 
+## Deploy (Vercel)
+
+Import the GitHub repo in the [Vercel dashboard](https://vercel.com/new) (Framework Preset: **Vite**). `vercel.json` adds a SPA fallback so routes like `/menu/burgers` work on refresh. Attach your portfolio domain under **Project → Settings → Domains**.
+
+Or from this directory, after [`vercel login`](https://vercel.com/docs/cli): `npx vercel --prod`.
+
 ## Requirements
 
 - Node.js 18+ recommended.
