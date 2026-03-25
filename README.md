@@ -44,7 +44,9 @@ npm run lint    # ESLint
 
 ## Deploy (Vercel)
 
-Production demo: **https://restaurant-kiosk-ui.vercel.app**
+**Live on portfolio:** **https://sivaganesh1407.vercel.app/restaurant-kiosk/** (embedded from the `sivaganesh1407` repo; rebuild with `npm run build:portfolio` and copy `dist/*` into `public/restaurant-kiosk/` when you change this app).
+
+Standalone demo: **https://restaurant-kiosk-ui.vercel.app**
 
 Import the GitHub repo in the [Vercel dashboard](https://vercel.com/new) (Framework Preset: **Vite**). `vercel.json` adds a SPA fallback so routes like `/menu/burgers` work on refresh.
 
